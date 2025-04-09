@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './models/plant.dart';
+import './database/plant_database.dart';
 
 void main() {
   runApp(const PlantApp());

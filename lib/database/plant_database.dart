@@ -1,8 +1,6 @@
-// lib/repositories/plant_database.dart
-
 import '../models/plant.dart';
 
-class PlantRepository {
+class PlantDatabase {
   static final List<Plant> _plants = [
     Plant(
       id: '1',

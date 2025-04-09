@@ -1,5 +1,3 @@
-// lib/models/plant.dart
-
 class Plant {
   final String id;
   final String name;
@@ -10,7 +8,7 @@ class Plant {
   final String wateringSchedule;
   final String sunlightPreference;
   final String temperatureRange;
-  final String? imageUrl; // optional, if you want to store an image link
+  final String? imageUrl;
 
   Plant({
     required this.id,
