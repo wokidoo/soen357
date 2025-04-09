@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import './models/plant.dart';
 import './database/plant_database.dart';
 
+List<Plant> plants = PlantDatabase().getAllPlants();
+
 void main() {
   runApp(const PlantApp());
 }
@@ -25,12 +27,6 @@ class PlantApp extends StatelessWidget {
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
-
-  final List<Map<String, String>> plants = const [
-    {"name": "Snake Plant"},
-    {"name": "Monstera"},
-    {"name": "ZZ Plant"},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +71,7 @@ class DashboardPage extends StatelessWidget {
 }
 
 class PlantCard extends StatelessWidget {
-  final Map<String, String> plant;
+  final Plant plant;
 
   const PlantCard({super.key, required this.plant});
 
@@ -86,7 +82,7 @@ class PlantCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 3,
       child: ListTile(
-        title: Text(plant['name']!),
+        title: Text(plant.name!),
         trailing: TextButton(
           child: const Text("Plant Profile"),
           onPressed: () {
