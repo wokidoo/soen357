@@ -78,42 +78,6 @@ class DashboardPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // // ===== Search Bar =====
-              // Container(
-              //   decoration: BoxDecoration(
-              //     color: Colors.green.shade50,
-              //     borderRadius: BorderRadius.circular(12),
-              //   ),
-              //   child: GestureDetector(
-              //     onTap: () {
-              //       Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) => const PlantSearchPage()),
-              //       );
-              //     },
-              //     child: Container(
-              //       padding: const EdgeInsets.symmetric(
-              //           horizontal: 16, vertical: 14),
-              //       decoration: BoxDecoration(
-              //         color: Colors.green.shade50,
-              //         borderRadius: BorderRadius.circular(12),
-              //       ),
-              //       child: Row(
-              //         children: const [
-              //           Icon(Icons.search, color: Colors.black54),
-              //           SizedBox(width: 8),
-              //           Text(
-              //             "Search Plant Catalog",
-              //             style: TextStyle(color: Colors.black54),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(height: 24),
-
               // ===== My Plants Section =====
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
