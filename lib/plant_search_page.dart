@@ -3,7 +3,9 @@ import './models/plant.dart';
 import './database/plant_database.dart';
 
 class PlantSearchPage extends StatefulWidget {
-  const PlantSearchPage({Key? key}) : super(key: key);
+  final void Function(Plant plant) onAddPlant;
+
+  const PlantSearchPage({Key? key, required this.onAddPlant}) : super(key: key);
 
   @override
   State<PlantSearchPage> createState() => _PlantSearchPageState();
@@ -65,7 +67,8 @@ class _PlantSearchPageState extends State<PlantSearchPage> {
                   subtitle: Text(plant.species),
                   trailing: ElevatedButton(
                     onPressed: () {
-                      // Logic to add plants
+                      widget.onAddPlant(plant);
+                      Navigator.pop(context);
                     },
                     child: const Text("Add to Personal Catalog"),
                   ),

@@ -4,8 +4,13 @@ import 'main.dart';
 
 class PlantDetailPage extends StatelessWidget {
   final Plant plant;
+  final VoidCallback? onDelete;
 
-  const PlantDetailPage({Key? key, required this.plant}) : super(key: key);
+  const PlantDetailPage({
+    Key? key,
+    required this.plant,
+    this.onDelete,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,40 +22,70 @@ class PlantDetailPage extends StatelessWidget {
 
     return Scaffold(
       // Minimalistic AppBar similar to the style in your screenshot
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          automaticallyImplyLeading: false,
-          leadingWidth: 300,
-          leading: GestureDetector(
-            onTap: () {
-              // Navigate back to the main (dashboard) page.
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => DashboardPage()),
-                (route) => false,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        leadingWidth: 300,
+        leading: GestureDetector(
+          onTap: () {
+            // Navigate back to the main (dashboard) page.
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => DashboardPage()),
+              (route) => false,
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Image.asset(
+              'assets/Bloom.png', // Ensure this asset is declared in pubspec.yaml.
+              fit: BoxFit.contain,
+            ),
+          ),
+        ), // Note the comma here to end the "leading" widget.
+        title: null, // This sets the center title to null.
+        centerTitle: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+            tooltip: 'Delete this plant',
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text("Remove Plant"),
+                  content: const Text(
+                      "Are you sure you want to remove this plant from your list?"),
+                  actions: [
+                    TextButton(
+                      child: const Text("Cancel"),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    TextButton(
+                      child: const Text("Delete",
+                          style: TextStyle(color: Colors.red)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        if (onDelete != null) {
+                          onDelete!();
+                        }
+                      },
+                    ),
+                  ],
+                ),
               );
             },
-            child: Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Image.asset(
-                'assets/Bloom.png', // Ensure this asset is declared in pubspec.yaml.
-                fit: BoxFit.contain,
-              ),
-            ),
-          ), // Note the comma here to end the "leading" widget.
-          title: null, // This sets the center title to null.
-          centerTitle: false,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.account_circle, color: Colors.black),
-              iconSize: 40, // Increase the icon size.
-              onPressed: () {
-                // Profile button logic here.
-              },
-            ),
-          ],
-        ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.account_circle, color: Colors.black),
+            iconSize: 40,
+            onPressed: () {
+              // Profile logic
+            },
+          ),
+        ],
+      ),
 
       body: SafeArea(
         child: SingleChildScrollView(
