@@ -34,48 +34,43 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // Using an AppBar here; if you want a custom header instead, you can adjust accordingly.
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        // Remove the leading back arrow if you don't need it
+        automaticallyImplyLeading: false,
+        // Control how much space the logo can take
+        leadingWidth: 300,
+        // Logo on the left
+        leading: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: Image.asset(
+            'assets/Bloom.png', // Make sure this file is declared in pubspec.yaml
+            fit: BoxFit.contain,
+          ),
+        ),
+        // Optional text/title in the center
+        title: null, //
+        centerTitle: false,
+        // Profile icon on the right
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.account_circle, color: Colors.black),
+            iconSize: 40, // Increase the icon size
+            onPressed: () {
+              // Profile button logic here
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ===== Header (Logo + Profile Icon) =====
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Logo + Title
-                  Row(
-                    children: [
-                      // Replace 'assets/Bloom.png' with your own logo asset.
-                      ClipOval(
-                        child: Image.asset(
-                          'assets/Bloom.png',
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        "Bloom",
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ],
-                  ),
-                  // Profile Icon
-                  IconButton(
-                    onPressed: () {
-                      // Navigate to profile or settings
-                    },
-                    icon: const Icon(Icons.account_circle),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-
+              
+              
               // ===== Search Bar =====
               Container(
                 decoration: BoxDecoration(
@@ -125,11 +120,11 @@ class DashboardPage extends StatelessWidget {
                     ),
               ),
               const SizedBox(height: 8),
-              const TaskItem(label: "Water Guillermo", icon: Icons.water_drop),
-              const TaskItem(label: "Water Ikram", icon: Icons.water_drop),
+              const TaskItem(label: "Water ZZ Plant", icon: Icons.water_drop),
+              const TaskItem(label: "Water Monstera", icon: Icons.water_drop),
               const TaskItem(
-                  label: "Move Hanine out of the sun", icon: Icons.wb_sunny),
-              const TaskItem(label: "Change Ikram’s soil", icon: Icons.grass),
+                  label: "Move Snake Plant out of the sun", icon: Icons.wb_sunny),
+              const TaskItem(label: "Change Monstera’s soil", icon: Icons.grass),
               const SizedBox(height: 8),
 
               // ===== Streak Info =====
