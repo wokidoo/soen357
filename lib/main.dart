@@ -8,7 +8,7 @@ void main() {
 }
 
 class PlantApp extends StatelessWidget {
-  const PlantApp({Key? key}) : super(key: key);
+  const PlantApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +18,14 @@ class PlantApp extends StatelessWidget {
         primarySwatch: Colors.green,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: DashboardPage(), // Removed const from DashboardPage since it holds non-const fields.
+      home:
+          DashboardPage(), // Removed const from DashboardPage since it holds non-const fields.
     );
   }
 }
 
 class DashboardPage extends StatelessWidget {
-  DashboardPage({Key? key}) : super(key: key);
+  DashboardPage({super.key});
 
   // Fetch plants from your PlantDatabase (runtime values, not compile‑time constants)
   final List<Plant> myPlants = PlantDatabase().getAllPlants();
@@ -76,8 +77,6 @@ class DashboardPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
-              
               // ===== Search Bar =====
               Container(
                 decoration: BoxDecoration(
@@ -130,8 +129,10 @@ class DashboardPage extends StatelessWidget {
               const TaskItem(label: "Water ZZ Plant", icon: Icons.water_drop),
               const TaskItem(label: "Water Monstera", icon: Icons.water_drop),
               const TaskItem(
-                  label: "Move Snake Plant out of the sun", icon: Icons.wb_sunny),
-              const TaskItem(label: "Change Monstera’s soil", icon: Icons.grass),
+                  label: "Move Snake Plant out of the sun",
+                  icon: Icons.wb_sunny),
+              const TaskItem(
+                  label: "Change Monstera’s soil", icon: Icons.grass),
               const SizedBox(height: 8),
 
               // ===== Streak Info =====
@@ -185,18 +186,17 @@ class DashboardPage extends StatelessWidget {
   }
 }
 
-
 class PlantCard extends StatelessWidget {
   final Plant plant;
-  const PlantCard({Key? key, required this.plant}) : super(key: key);
+  const PlantCard({super.key, required this.plant});
 
   @override
   Widget build(BuildContext context) {
     // Determine the image provider based on the imageUrl.
-    final ImageProvider imageProvider = (plant.imageUrl != null &&
-            plant.imageUrl!.startsWith("assets/"))
-        ? AssetImage(plant.imageUrl!) as ImageProvider
-        : NetworkImage(plant.imageUrl ?? '');
+    final ImageProvider imageProvider =
+        (plant.imageUrl != null && plant.imageUrl!.startsWith("assets/"))
+            ? AssetImage(plant.imageUrl!) as ImageProvider
+            : NetworkImage(plant.imageUrl ?? '');
 
     return InkWell(
       onTap: () {
@@ -252,10 +252,10 @@ class TaskItem extends StatefulWidget {
   final IconData icon;
 
   const TaskItem({
-    Key? key,
+    super.key,
     required this.label,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   State<TaskItem> createState() => _TaskItemState();
