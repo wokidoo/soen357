@@ -12,7 +12,7 @@ class PlantDatabase {
       wateringSchedule: 'Once a week, allowing the top inch of soil to dry out before watering.',
       sunlightPreference: 'Prefers bright, indirect sunlight near a window (avoid harsh midday rays).',
       temperatureRange: 'Thrives in 65–85°F (18–29°C).',
-      imageUrl: 'https://yourcdn.com/images/monstera.png', 
+      imageUrl: 'assets/snake_plant.png', 
     ),
     Plant(
       id: '2',
@@ -24,7 +24,7 @@ class PlantDatabase {
       wateringSchedule: 'Water when the top soil becomes slightly dry, generally twice a week in warm months.',
       sunlightPreference: 'Prefers bright, indirect light, but can tolerate lower light areas.',
       temperatureRange: 'Ideal range: 60–75°F (16–24°C).',
-      imageUrl: 'https://yourcdn.com/images/boston_fern.png',
+      imageUrl: 'assets/boston_fern.png',
     ),
     Plant(
       id: '3',
@@ -36,7 +36,7 @@ class PlantDatabase {
       wateringSchedule: 'Water when the top soil becomes slightly dry, generally twice a week in warm months.',
       sunlightPreference: 'Prefers bright, indirect light, but can tolerate lower light areas.',
       temperatureRange: 'Ideal range: 60–75°F (16–24°C).',
-      imageUrl: 'https://yourcdn.com/images/boston_fern.png',
+      imageUrl: 'assets/zz.png',
     ),
   ];
 
