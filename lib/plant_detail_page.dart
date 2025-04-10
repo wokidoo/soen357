@@ -5,7 +5,7 @@ import 'main.dart';
 class PlantDetailPage extends StatelessWidget {
   final Plant plant;
 
-  const PlantDetailPage({Key? key, required this.plant}) : super(key: key);
+  const PlantDetailPage({super.key, required this.plant});
 
   @override
   Widget build(BuildContext context) {
@@ -17,40 +17,40 @@ class PlantDetailPage extends StatelessWidget {
 
     return Scaffold(
       // Minimalistic AppBar similar to the style in your screenshot
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          automaticallyImplyLeading: false,
-          leadingWidth: 300,
-          leading: GestureDetector(
-            onTap: () {
-              // Navigate back to the main (dashboard) page.
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => DashboardPage()),
-                (route) => false,
-              );
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        leadingWidth: 300,
+        leading: GestureDetector(
+          onTap: () {
+            // Navigate back to the main (dashboard) page.
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => DashboardPage()),
+              (route) => false,
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Image.asset(
+              'assets/Bloom.png', // Ensure this asset is declared in pubspec.yaml.
+              fit: BoxFit.contain,
+            ),
+          ),
+        ), // Note the comma here to end the "leading" widget.
+        title: null, // This sets the center title to null.
+        centerTitle: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.account_circle, color: Colors.black),
+            iconSize: 40, // Increase the icon size.
+            onPressed: () {
+              // Profile button logic here.
             },
-            child: Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Image.asset(
-                'assets/Bloom.png', // Ensure this asset is declared in pubspec.yaml.
-                fit: BoxFit.contain,
-              ),
-            ),
-          ), // Note the comma here to end the "leading" widget.
-          title: null, // This sets the center title to null.
-          centerTitle: false,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.account_circle, color: Colors.black),
-              iconSize: 40, // Increase the icon size.
-              onPressed: () {
-                // Profile button logic here.
-              },
-            ),
-          ],
-        ),
+          ),
+        ],
+      ),
 
       body: SafeArea(
         child: SingleChildScrollView(
@@ -141,8 +141,7 @@ class _InfoRow extends StatelessWidget {
   final String label;
   final String value;
 
-  const _InfoRow({Key? key, required this.label, required this.value})
-      : super(key: key);
+  const _InfoRow({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

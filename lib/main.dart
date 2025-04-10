@@ -9,7 +9,7 @@ void main() {
 }
 
 class PlantApp extends StatelessWidget {
-  const PlantApp({Key? key}) : super(key: key);
+  const PlantApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class PlantApp extends StatelessWidget {
 }
 
 class DashboardPage extends StatelessWidget {
-  DashboardPage({Key? key}) : super(key: key);
+  DashboardPage({super.key});
 
   // Fetch plants from your PlantDatabase (runtime values, not compile‑time constants)
   final List<Plant> myPlants = PlantDatabase().getAllPlants();
@@ -187,7 +187,7 @@ class DashboardPage extends StatelessWidget {
 
 class PlantCard extends StatelessWidget {
   final Plant plant;
-  const PlantCard({Key? key, required this.plant}) : super(key: key);
+  const PlantCard({super.key, required this.plant});
 
   @override
   Widget build(BuildContext context) {
@@ -251,10 +251,10 @@ class TaskItem extends StatefulWidget {
   final IconData icon;
 
   const TaskItem({
-    Key? key,
+    super.key,
     required this.label,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   State<TaskItem> createState() => _TaskItemState();
