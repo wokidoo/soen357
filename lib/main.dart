@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './models/plant.dart';
 import './database/plant_database.dart';
+import 'plant_detail_page.dart';
 
 void main() {
   runApp(const PlantApp());
@@ -37,32 +38,38 @@ class DashboardPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        // Remove the leading back arrow if you don't need it
         automaticallyImplyLeading: false,
-        // Control how much space the logo can take
         leadingWidth: 300,
-        // Logo on the left
-        leading: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Image.asset(
-            'assets/Bloom.png', // Make sure this file is declared in pubspec.yaml
-            fit: BoxFit.contain,
+        leading: GestureDetector(
+          onTap: () {
+            // Navigate back to the main (dashboard) page.
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => DashboardPage()),
+              (route) => false,
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Image.asset(
+              'assets/Bloom.png', // Ensure this asset is declared in pubspec.yaml.
+              fit: BoxFit.contain,
+            ),
           ),
-        ),
-        // Optional text/title in the center
-        title: null, //
+        ), // Note the comma here to end the "leading" widget.
+        title: null, // This sets the center title to null.
         centerTitle: false,
-        // Profile icon on the right
         actions: [
           IconButton(
             icon: const Icon(Icons.account_circle, color: Colors.black),
-            iconSize: 40, // Increase the icon size
+            iconSize: 40, // Increase the icon size.
             onPressed: () {
-              // Profile button logic here
+              // Profile button logic here.
             },
           ),
         ],
       ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -178,6 +185,7 @@ class DashboardPage extends StatelessWidget {
   }
 }
 
+
 class PlantCard extends StatelessWidget {
   final Plant plant;
   const PlantCard({Key? key, required this.plant}) : super(key: key);
@@ -190,39 +198,50 @@ class PlantCard extends StatelessWidget {
         ? AssetImage(plant.imageUrl!) as ImageProvider
         : NetworkImage(plant.imageUrl ?? '');
 
-    return SizedBox(
-      width: 120,
-      child: Column(
-        children: [
-          // Plant Image
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.green.shade50,
-                borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        // Navigate to the Plant Detail Page when tapped
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlantDetailPage(plant: plant),
+          ),
+        );
+      },
+      child: SizedBox(
+        width: 120,
+        child: Column(
+          children: [
+            // Plant Image
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.green.shade50,
+                  borderRadius: BorderRadius.circular(12),
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 4),
-          // Plant Name and Species
-          Text(
-            plant.name,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Text(
-            plant.species,
-            style: const TextStyle(color: Colors.grey),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+            const SizedBox(height: 4),
+            // Plant Name and Species
+            Text(
+              plant.name,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              plant.species,
+              style: const TextStyle(color: Colors.grey),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }

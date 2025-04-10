@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './models/plant.dart'; // Adjust path as needed
+import 'main.dart';
 
 class PlantDetailPage extends StatelessWidget {
   final Plant plant;
@@ -16,35 +17,41 @@ class PlantDetailPage extends StatelessWidget {
 
     return Scaffold(
       // Minimalistic AppBar similar to the style in your screenshot
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        // Remove the leading back arrow if you don't need it
-        automaticallyImplyLeading: false,
-        // Control how much space the logo can take
-        leadingWidth: 300,
-        // Logo on the left
-        leading: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Image.asset(
-            'assets/Bloom.png', // Make sure this file is declared in pubspec.yaml
-            fit: BoxFit.contain,
-          ),
-        ),
-        // Optional text/title in the center
-        title: null, //
-        centerTitle: false,
-        // Profile icon on the right
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.account_circle, color: Colors.black),
-            iconSize: 40, // Increase the icon size
-            onPressed: () {
-              // Profile button logic here
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          leadingWidth: 300,
+          leading: GestureDetector(
+            onTap: () {
+              // Navigate back to the main (dashboard) page.
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => DashboardPage()),
+                (route) => false,
+              );
             },
-          ),
-        ],
-      ),
+            child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Image.asset(
+                'assets/Bloom.png', // Ensure this asset is declared in pubspec.yaml.
+                fit: BoxFit.contain,
+              ),
+            ),
+          ), // Note the comma here to end the "leading" widget.
+          title: null, // This sets the center title to null.
+          centerTitle: false,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.account_circle, color: Colors.black),
+              iconSize: 40, // Increase the icon size.
+              onPressed: () {
+                // Profile button logic here.
+              },
+            ),
+          ],
+        ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
