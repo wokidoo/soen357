@@ -1,20 +1,8 @@
-import "../models/article.dart";
-
 class ArticleDatabase {
-  List<Article> getRecommendedArticles() {
-    return [
-      Article(
-        id: 'a1',
-        title: 'How to Keep Your Plants Healthy',
-        imageUrl: 'https://source.unsplash.com/600x400/?plant,green',
-        contentUrl: 'https://example.com/article1',
-      ),
-      Article(
-        id: 'a2',
-        title: 'Top 5 Indoor Plants for Your Home',
-        imageUrl: 'https://source.unsplash.com/600x400/?indoor,plant',
-        contentUrl: 'https://example.com/article2',
-      ),
-    ];
-  }
+  static List<String> articleUrls = [
+    'https://www.thesill.com/blogs/plants-101/top-ten-plant-care-tips',
+    'https://theeverygirl.com/indoor-plant-care/',
+    'https://www.pickuplimes.com/article/houseplant-care-tips-for-beginners-99',
+    'https://mortonarb.org/blog/proper-watering-keeps-plants-healthy/',
+  ];
 }
