@@ -176,8 +176,7 @@ class _InfoRow extends StatelessWidget {
   final String label;
   final String value;
 
-  const _InfoRow({Key? key, required this.label, required this.value})
-      : super(key: key);
+  const _InfoRow({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

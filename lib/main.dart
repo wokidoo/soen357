@@ -9,7 +9,7 @@ void main() {
 }
 
 class PlantApp extends StatelessWidget {
-  const PlantApp({Key? key}) : super(key: key);
+  const PlantApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -260,10 +260,10 @@ class TaskItem extends StatefulWidget {
   final IconData icon;
 
   const TaskItem({
-    Key? key,
+    super.key,
     required this.label,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   State<TaskItem> createState() => _TaskItemState();
