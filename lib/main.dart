@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './models/plant.dart';
 import './database/plant_database.dart';
 import 'plant_detail_page.dart';
+import 'plant_search_page.dart';
 
 void main() {
   runApp(const PlantApp());
@@ -18,7 +19,8 @@ class PlantApp extends StatelessWidget {
         primarySwatch: Colors.green,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: DashboardPage(), // Removed const from DashboardPage since it holds non-const fields.
+      home:
+          DashboardPage(), // Removed const from DashboardPage since it holds non-const fields.
     );
   }
 }
@@ -76,35 +78,67 @@ class DashboardPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
-              
-              // ===== Search Bar =====
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.green.shade50,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Search Plant Catalog",
-                    prefixIcon: const Icon(Icons.search),
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 14),
-                  ),
-                  onChanged: (value) {
-                    // Handle search logic
-                  },
-                ),
-              ),
-              const SizedBox(height: 24),
+              // // ===== Search Bar =====
+              // Container(
+              //   decoration: BoxDecoration(
+              //     color: Colors.green.shade50,
+              //     borderRadius: BorderRadius.circular(12),
+              //   ),
+              //   child: GestureDetector(
+              //     onTap: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => const PlantSearchPage()),
+              //       );
+              //     },
+              //     child: Container(
+              //       padding: const EdgeInsets.symmetric(
+              //           horizontal: 16, vertical: 14),
+              //       decoration: BoxDecoration(
+              //         color: Colors.green.shade50,
+              //         borderRadius: BorderRadius.circular(12),
+              //       ),
+              //       child: Row(
+              //         children: const [
+              //           Icon(Icons.search, color: Colors.black54),
+              //           SizedBox(width: 8),
+              //           Text(
+              //             "Search Plant Catalog",
+              //             style: TextStyle(color: Colors.black54),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(height: 24),
 
               // ===== My Plants Section =====
-              Text(
-                "My Plants",
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "My Plants",
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.add_circle_outline),
+                    color: Colors.green,
+                    iconSize: 32,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PlantSearchPage()),
+                      );
+                    },
+                  ),
+                ],
               ),
+
               const SizedBox(height: 8),
               SizedBox(
                 height: 160,
@@ -130,8 +164,10 @@ class DashboardPage extends StatelessWidget {
               const TaskItem(label: "Water ZZ Plant", icon: Icons.water_drop),
               const TaskItem(label: "Water Monstera", icon: Icons.water_drop),
               const TaskItem(
-                  label: "Move Snake Plant out of the sun", icon: Icons.wb_sunny),
-              const TaskItem(label: "Change Monstera’s soil", icon: Icons.grass),
+                  label: "Move Snake Plant out of the sun",
+                  icon: Icons.wb_sunny),
+              const TaskItem(
+                  label: "Change Monstera’s soil", icon: Icons.grass),
               const SizedBox(height: 8),
 
               // ===== Streak Info =====
@@ -185,7 +221,6 @@ class DashboardPage extends StatelessWidget {
   }
 }
 
-
 class PlantCard extends StatelessWidget {
   final Plant plant;
   const PlantCard({Key? key, required this.plant}) : super(key: key);
@@ -193,10 +228,10 @@ class PlantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Determine the image provider based on the imageUrl.
-    final ImageProvider imageProvider = (plant.imageUrl != null &&
-            plant.imageUrl!.startsWith("assets/"))
-        ? AssetImage(plant.imageUrl!) as ImageProvider
-        : NetworkImage(plant.imageUrl ?? '');
+    final ImageProvider imageProvider =
+        (plant.imageUrl != null && plant.imageUrl!.startsWith("assets/"))
+            ? AssetImage(plant.imageUrl!) as ImageProvider
+            : NetworkImage(plant.imageUrl ?? '');
 
     return InkWell(
       onTap: () {
