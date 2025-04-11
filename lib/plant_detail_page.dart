@@ -4,8 +4,13 @@ import 'main.dart';
 
 class PlantDetailPage extends StatelessWidget {
   final Plant plant;
+  final VoidCallback? onDelete;
 
-  const PlantDetailPage({super.key, required this.plant});
+  const PlantDetailPage({
+    Key? key,
+    required this.plant,
+    this.onDelete,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +48,40 @@ class PlantDetailPage extends StatelessWidget {
         centerTitle: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.account_circle, color: Colors.black),
-            iconSize: 40, // Increase the icon size.
+            icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+            tooltip: 'Delete this plant',
             onPressed: () {
-              // Profile button logic here.
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text("Remove Plant"),
+                  content: const Text(
+                      "Are you sure you want to remove this plant from your list?"),
+                  actions: [
+                    TextButton(
+                      child: const Text("Cancel"),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    TextButton(
+                      child: const Text("Delete",
+                          style: TextStyle(color: Colors.red)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        if (onDelete != null) {
+                          onDelete!();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.account_circle, color: Colors.black),
+            iconSize: 40,
+            onPressed: () {
+              // Profile logic
             },
           ),
         ],
