@@ -51,7 +51,57 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               padding: const EdgeInsets.all(16),
-              child: Html(data: content ?? ''),
+              child: Html(
+                data: content ?? '',
+                style: {
+                  "a": Style(
+                    textDecoration: TextDecoration.none,
+                    color: Colors
+                        .black, // or Theme.of(context).textTheme.bodyMedium?.color
+                  ),
+                  "body": Style(
+                      fontSize: FontSize(16.0),
+                      lineHeight: LineHeight.number(1.0)),
+                  "h1": Style(
+                      fontSize: FontSize(28), fontWeight: FontWeight.bold),
+                  "h2": Style(
+                      fontSize: FontSize(26), fontWeight: FontWeight.bold),
+                  "h3": Style(
+                      fontSize: FontSize(24), fontWeight: FontWeight.bold),
+                  "h4": Style(
+                      fontSize: FontSize(22), fontWeight: FontWeight.bold),
+                  "h5": Style(
+                      fontSize: FontSize(20), fontWeight: FontWeight.bold),
+                  "p": Style(
+                      margin: Margins.only(bottom: 14),
+                      textAlign: TextAlign.justify),
+                  "span": Style(
+                      fontSize: FontSize(16),
+                      lineHeight: LineHeight.number(1.5),
+                      margin: Margins.only(bottom: 14),
+                      textAlign: TextAlign.justify),
+                },
+                extensions: [
+                  TagExtension(
+                    tagsToExtend: {"img"},
+                    builder: (context) {
+                      final attrs = context.attributes;
+                      final src = attrs["src"];
+                      if (src == null) return const SizedBox.shrink();
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                            src,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
     );
   }
