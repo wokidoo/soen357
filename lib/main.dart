@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:soen357/database/article_database.dart';
 import './models/plant.dart';
 import './database/plant_database.dart';
+import 'database/article_preview_loader.dart';
+import './models/article.dart';
 import 'plant_detail_page.dart';
-import 'plant_search_page.dart';
+import './components/article_card.dart';
 
 void main() {
   runApp(const PlantApp());
@@ -39,6 +42,12 @@ class _DashboardPageState extends State<DashboardPage> {
     setState(() {
       myPlants.remove(plant);
     });
+
+  Future<List<Article>> loadRecommendedArticles() {
+    return Future.wait(
+      ArticleDatabase.articleUrls.map((url) => ArticlePreviewLoader.load(url)),
+    );
+
   }
 
   @override
@@ -160,13 +169,17 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
               const SizedBox(height: 24),
 
+
+              // ===== Recommendation Section =====
+
               Text(
-                "Grow the Family",
+                "Recommended Articles",
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
               const SizedBox(height: 8),
+
               SizedBox(
                 height: 160,
                 child: ListView.separated(
@@ -180,6 +193,30 @@ class _DashboardPageState extends State<DashboardPage> {
                     );
                   },
                 ),
+
+              FutureBuilder<List<Article>>(
+                future: loadRecommendedArticles(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return const Text('Failed to load articles');
+                  } else {
+                    final articles = snapshot.data!;
+                    return SizedBox(
+                      height: 200,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: articles.length,
+                        separatorBuilder: (_, __) => const SizedBox(width: 16),
+                        itemBuilder: (context, index) {
+                          return ArticleCard(article: articles[index]);
+                        },
+                      ),
+                    );
+                  }
+                },
+
               ),
             ],
           ),
