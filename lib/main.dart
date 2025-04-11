@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:soen357/database/article_database.dart';
 import './models/plant.dart';
 import './database/plant_database.dart';
+import 'database/article_preview_loader.dart';
+import './models/article.dart';
 import 'plant_detail_page.dart';
+import './components/article_card.dart';
 
 void main() {
   runApp(const PlantApp());
@@ -31,6 +35,12 @@ class DashboardPage extends StatelessWidget {
   final List<Plant> myPlants = PlantDatabase().getAllPlants();
   // For this example, we'll re-use the same plant list for "Grow the Family."
   final List<Plant> recommendedPlants = PlantDatabase().getAllPlants();
+
+  Future<List<Article>> loadRecommendedArticles() {
+    return Future.wait(
+      ArticleDatabase.articleUrls.map((url) => ArticlePreviewLoader.load(url)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,24 +169,36 @@ class DashboardPage extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
-              // ===== Grow the Family Section =====
+              // ===== Recommendation Section =====
               Text(
-                "Grow the Family",
+                "Recommended Articles",
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
               const SizedBox(height: 8),
-              SizedBox(
-                height: 160,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: recommendedPlants.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 16),
-                  itemBuilder: (context, index) {
-                    return PlantCard(plant: recommendedPlants[index]);
-                  },
-                ),
+              FutureBuilder<List<Article>>(
+                future: loadRecommendedArticles(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return const Text('Failed to load articles');
+                  } else {
+                    final articles = snapshot.data!;
+                    return SizedBox(
+                      height: 200,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: articles.length,
+                        separatorBuilder: (_, __) => const SizedBox(width: 16),
+                        itemBuilder: (context, index) {
+                          return ArticleCard(article: articles[index]);
+                        },
+                      ),
+                    );
+                  }
+                },
               ),
             ],
           ),
