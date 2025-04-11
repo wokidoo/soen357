@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:soen357/database/article_database.dart';
 import './models/plant.dart';
 import './database/plant_database.dart';
 import 'database/article_preview_loader.dart';
 import './models/article.dart';
-import 'plant_detail_page.dart';
 import './components/article_card.dart';
+import './database/article_database.dart';
+import 'plant_detail_page.dart';
+import 'plant_search_page.dart';
 
 void main() {
   runApp(const PlantApp());
@@ -27,6 +28,112 @@ class PlantApp extends StatelessWidget {
   }
 }
 
+class TaskItem extends StatefulWidget {
+  final String label;
+  final IconData icon;
+
+  const TaskItem({
+    super.key,
+    required this.label,
+    required this.icon,
+  });
+
+  @override
+  State<TaskItem> createState() => _TaskItemState();
+}
+
+class _TaskItemState extends State<TaskItem> {
+  bool isChecked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Checkbox(
+          value: isChecked,
+          onChanged: (bool? value) {
+            setState(() {
+              isChecked = value ?? false;
+            });
+          },
+          activeColor: Colors.green,
+        ),
+        Icon(widget.icon, color: Colors.green),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(widget.label),
+        ),
+      ],
+    );
+  }
+}
+
+class PlantCard extends StatelessWidget {
+  final Plant plant;
+  final VoidCallback? onDelete;
+
+  const PlantCard({Key? key, required this.plant, this.onDelete})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final ImageProvider imageProvider =
+        (plant.imageUrl != null && plant.imageUrl!.startsWith("assets/"))
+            ? AssetImage(plant.imageUrl!) as ImageProvider
+            : NetworkImage(plant.imageUrl ?? '');
+
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlantDetailPage(
+              plant: plant,
+              onDelete: () {
+                onDelete?.call();
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        );
+      },
+      child: SizedBox(
+        width: 120,
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.green.shade50,
+                  borderRadius: BorderRadius.circular(12),
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              plant.name,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              plant.species,
+              style: const TextStyle(color: Colors.grey),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class DashboardPage extends StatefulWidget {
   DashboardPage({Key? key}) : super(key: key);
 
@@ -42,12 +149,12 @@ class _DashboardPageState extends State<DashboardPage> {
     setState(() {
       myPlants.remove(plant);
     });
+  }
 
   Future<List<Article>> loadRecommendedArticles() {
     return Future.wait(
       ArticleDatabase.articleUrls.map((url) => ArticlePreviewLoader.load(url)),
     );
-
   }
 
   @override
@@ -169,9 +276,7 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
               const SizedBox(height: 24),
 
-
               // ===== Recommendation Section =====
-
               Text(
                 "Recommended Articles",
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -179,20 +284,6 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
               ),
               const SizedBox(height: 8),
-
-              SizedBox(
-                height: 160,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: recommendedPlants.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 16),
-                  itemBuilder: (context, index) {
-                    return PlantCard(
-                      plant: recommendedPlants[index],
-                      onDelete: null, // Not deletable
-                    );
-                  },
-                ),
 
               FutureBuilder<List<Article>>(
                 future: loadRecommendedArticles(),
@@ -216,118 +307,11 @@ class _DashboardPageState extends State<DashboardPage> {
                     );
                   }
                 },
-
               ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class PlantCard extends StatelessWidget {
-  final Plant plant;
-  final VoidCallback? onDelete;
-
-  const PlantCard({Key? key, required this.plant, this.onDelete})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final ImageProvider imageProvider =
-        (plant.imageUrl != null && plant.imageUrl!.startsWith("assets/"))
-            ? AssetImage(plant.imageUrl!) as ImageProvider
-            : NetworkImage(plant.imageUrl ?? '');
-
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PlantDetailPage(
-              plant: plant,
-              onDelete: () {
-                onDelete?.call();
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        );
-      },
-      child: SizedBox(
-        width: 120,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.green.shade50,
-                  borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              plant.name,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            Text(
-              plant.species,
-              style: const TextStyle(color: Colors.grey),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class TaskItem extends StatefulWidget {
-  final String label;
-  final IconData icon;
-
-  const TaskItem({
-    super.key,
-    required this.label,
-    required this.icon,
-  });
-
-  @override
-  State<TaskItem> createState() => _TaskItemState();
-}
-
-class _TaskItemState extends State<TaskItem> {
-  bool isChecked = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Checkbox(
-          value: isChecked,
-          onChanged: (bool? value) {
-            setState(() {
-              isChecked = value ?? false;
-            });
-          },
-          activeColor: Colors.green,
-        ),
-        Icon(widget.icon, color: Colors.green),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Text(widget.label),
-        ),
-      ],
     );
   }
 }
