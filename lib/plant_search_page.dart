@@ -57,20 +57,55 @@ class _PlantSearchPageState extends State<PlantSearchPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: filteredPlants.length,
+              separatorBuilder: (context, index) => Container(
+                margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                height: 1,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.green.shade50,
+                      offset: const Offset(0, 2),
+                      blurRadius: 2,
+                    ),
+                  ],
+                ),
+              ),
               itemBuilder: (context, index) {
                 final plant = filteredPlants[index];
-                return ListTile(
-                  leading: Image.asset(plant.imageUrl ?? ''),
-                  title: Text(plant.name),
-                  subtitle: Text(plant.species),
-                  trailing: ElevatedButton(
-                    onPressed: () {
-                      widget.onAddPlant(plant);
-                      Navigator.pop(context);
-                    },
-                    child: const Text("Add to Personal Catalog"),
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  height: 80,
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 8),
+                    leading: Image.asset(plant.imageUrl ?? ''),
+                    title: Text(
+                      plant.name,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(plant.species),
+                    trailing: ElevatedButton(
+                      onPressed: () {
+                        widget.onAddPlant(plant);
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        side: BorderSide(color: Colors.green), // Green border added
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                      ),
+                      child: const Text(
+                        "Add to Personal Catalog",
+                        style: TextStyle(color: Colors.green),
+                      ),
+                    ),
                   ),
                 );
               },
