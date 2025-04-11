@@ -84,7 +84,7 @@ class PlantDatabase {
       wateringSchedule: 'Water when the top soil becomes slightly dry, generally twice a week in warm months.',
       sunlightPreference: 'Prefers bright, indirect light, but can tolerate lower light areas.',
       temperatureRange: 'Ideal range: 65–75°F (18–24°C).',
-      imageUrl: 'assets/monopera.png',
+      imageUrl: 'assets/cactus.png',
     ),
   ];
 
