@@ -74,6 +74,18 @@ class PlantDatabase {
       temperatureRange: 'Ideal range: 65–75°F (18–24°C).',
       imageUrl: 'assets/monopera.png',
     ),
+    Plant(
+      id: '7',
+      name: 'Cactus',
+      species: 'Cacteria',
+      description: 'Cactus is a lush Cacteria with arching fronds of bright green cactis. Perfect for dry environments.',
+      currentStatus: 'Healthy, although requires misting for humidity.',
+      leafCondition: 'A few fronds are turning yellow at the tips.',
+      wateringSchedule: 'Water when the top soil becomes slightly dry, generally twice a week in warm months.',
+      sunlightPreference: 'Prefers bright, indirect light, but can tolerate lower light areas.',
+      temperatureRange: 'Ideal range: 65–75°F (18–24°C).',
+      imageUrl: 'assets/monopera.png',
+    ),
   ];
 
   List<Plant> getAllPlants() => _plants;

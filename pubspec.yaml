@@ -69,6 +69,7 @@ flutter:
     - assets/hanine.png
     - assets/ikram.png
     - assets/monopera.png
+    - assets/cactus.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
