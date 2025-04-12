@@ -1,5 +1,10 @@
 # Bloom 
 
+
+https://github.com/user-attachments/assets/53b5e0cb-5ec4-4de8-bc85-c1103ba32a23
+
+
+
 **Bloom D** is a Flutter-based plant care tracking application designed as part of the SOEN 357: User Interface Design course at Concordia University. The app helps users manage and monitor their houseplants through an interactive dashboard, detailed plant profiles, daily task checklists, and personalized recommendations. The intuitive interface is designed to encourage consistent plant care and promote a healthy, green environment.
 
 ## Features
